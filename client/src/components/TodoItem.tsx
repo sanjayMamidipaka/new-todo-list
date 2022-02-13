@@ -1,8 +1,9 @@
-import React, { EventHandler } from 'react'
+import React, { EventHandler, useEffect } from 'react'
 import { transform } from 'typescript';
 import { useState } from 'react';
 import Tag from './Tag';
 import './TodoItem.css';
+import axios from 'axios';
 
 // export const isChecked = () => {
 //     return checked;
@@ -18,6 +19,23 @@ export default function TodoItem({todoListItem, index, parentCallBack}: {todoLis
         return newDate
     }
 
+    useEffect(() => {
+        const date = transformDate(dueDate);
+        const body = {
+            date,
+            title,
+            tagList
+        }
+        console.log(body);
+        
+
+        axios.post('https://localhost:5000', body).then((response) => {
+            console.log(response);
+        }).catch((err) => {
+            console.log(err);
+            
+        })
+    }, [])
     
     return (
         // <div className="card">
