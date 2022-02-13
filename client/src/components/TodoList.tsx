@@ -176,39 +176,45 @@ export default function TodoList() {
   return (
     <div>
       <div className="card">
-        <div className="hbox first-line">
-          <input className="title-input"
-            placeholder="Title"
-            type="text"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-          />
-          <input
-            className="date-input"
-            type="date"
-            value={date}
-            onChange={(e) => {
-              setDate(e.target.value);
-            }} />
-        </div>
-        <input
-          type="text"
-          placeholder="Add tags"
-          value={tagValue}
-          onChange={(e) => setTagValue(e.target.value)}
-        />
-        <button type="submit" onClick={addNewTag}>
-          Create new tag
-        </button>
-
-        <div>
-          {tagArray.map((tagObject: { name1: string, index1: number }) => {
-            return <Tag name={tagObject.name1} key={tagObject.index1} theIndex={tagObject.index1} remove={removeElement} include={"x"}></Tag>
-          })}
-        </div>
+        <div className="hbox">
+          <div className="left">
+            <div className="hbox first-line">
+              <input className="title-input"
+                placeholder="Title"
+                type="text"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+              />
+              <input
+                className="date-input"
+                type="date"
+                value={date}
+                onChange={(e) => {
+                  setDate(e.target.value);
+                }} />
+            </div>
+            <div className="hbox">
+              <input
+                type="text"
+                className="tag-input"
+                placeholder="Add tags"
+                value={tagValue}
+                onChange={(e) => setTagValue(e.target.value)}
+              />
+              <button type="submit" className="tag-btn" onClick={addNewTag}>
+                <i className="fa-solid fa-circle-plus"></i>
+              </button>
+            </div>
+            <div>
+              {tagArray.map((tagObject: { name1: string, index1: number }) => {
+                return <Tag name={tagObject.name1} key={tagObject.index1} theIndex={tagObject.index1} remove={removeElement} include={"x"}></Tag>
+              })}
+            </div>
+          </div>
           <button type='submit' onClick={handleSubmit}>
             <i className="fa-solid fa-circle-plus"></i>
           </button>
+        </div>
       </div>
 
       <div className="card">
