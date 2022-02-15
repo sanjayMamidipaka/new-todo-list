@@ -20,21 +20,24 @@ export default function TodoItem({todoListItem, index, parentCallBack}: {todoLis
     }
 
     useEffect(() => {
-        const date = transformDate(dueDate);
-        const body = {
-            date,
-            title,
-            tagList
+        async function sendTwilioMessage() {
+            try {
+                const date = transformDate(dueDate);
+                const body = {
+                    date,
+                    title,
+                    tagList
+                }
+                console.log(body);
+                const result = (await axios.post('/sendEmail', body)).data;
+                console.log(result);
+            } catch(e) {
+                console.log(e);
+            }
         }
-        console.log(body);
-        
 
-        axios.post('https://localhost:5000', body).then((response) => {
-            console.log(response);
-        }).catch((err) => {
-            console.log(err);
-            
-        })
+        sendTwilioMessage();
+       
     }, [])
     
     return (
