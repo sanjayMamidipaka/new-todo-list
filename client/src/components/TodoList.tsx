@@ -162,7 +162,6 @@ export default function TodoList() {
     }
 
     var handleCallBack = (childData: boolean, index: string) =>{
-      // let newTagArray = tagArray.filter((tagObject) => tagObject.index1 !== index);
       todoListCompletedItems.forEach((item) => {
         const {idx} = item;
         if (index == idx) {
@@ -173,6 +172,16 @@ export default function TodoList() {
 
       
     }
+
+    const removeTodoItem = (index: number) => {
+      setTodoListCompletedItems((todoListCompletedItems)=>{
+        let newTodoListCompletedItems = todoListCompletedItems.filter((todoListItem) => todoListItem.idx !== index);
+        
+        return newTodoListCompletedItems;
+      })
+      
+    }
+
   return (
     <div>
   <div className="card">
@@ -224,7 +233,7 @@ export default function TodoList() {
 
       <div>
           {todoListCompletedItems.map((todoListItem) => {
-            return <TodoItem todoListItem={todoListItem} key={todoListItem.idx} index={todoListItem.idx} parentCallBack={handleCallBack}></TodoItem>
+            return <TodoItem todoListItem={todoListItem} key={todoListItem.idx} index={todoListItem.idx} parentCallBack={handleCallBack} removeHandler={removeTodoItem}></TodoItem>
           })}
         </div>
 

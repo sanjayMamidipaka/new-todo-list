@@ -9,7 +9,7 @@ import axios from 'axios';
 //     return checked;
 // }
 
-export default function TodoItem({todoListItem, index, parentCallBack}: {todoListItem: any, index: string, parentCallBack: Function}) {
+export default function TodoItem({todoListItem, index, parentCallBack, removeHandler}: {todoListItem: any, index: string, parentCallBack: Function, removeHandler: Function}) {
     const {title, dueDate, tagList, completed} = todoListItem;
 
     const transformDate = (dueDate: string) => {
@@ -26,7 +26,6 @@ export default function TodoItem({todoListItem, index, parentCallBack}: {todoLis
             title,
             tagList
         }
-        console.log(body);
         
 
         axios.post('https://localhost:5000', body).then((response) => {
@@ -52,7 +51,8 @@ export default function TodoItem({todoListItem, index, parentCallBack}: {todoLis
                         return <Tag name={tagObject.name1} key={tagObject.index1} theIndex={tagObject.index1} remove={()=>{}} include={""}></Tag>
                     })}
                     </div>
-                <div className="grid-item"><h6 style={{fontSize: "10px"}}>by: {transformDate(dueDate)}</h6></div>  
+                <div className="grid-item"><h6 style={{fontSize: "10px"}}>by: {transformDate(dueDate)}</h6></div>
+                <input type="checkbox" onChange={(e) => {removeHandler(index)}}/>
             </div>
         </div>
     )
