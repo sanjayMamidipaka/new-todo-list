@@ -1,4 +1,4 @@
-import React, { EventHandler } from 'react'
+import React, { EventHandler, useEffect } from 'react'
 import './TodoList.css'
 import { useState } from 'react'
 import Tag from './Tag'
@@ -26,8 +26,10 @@ export default function TodoList() {
   const [tagValue, setTagValue] = useState('');
   const [index, setIndex] = useState(0);
   const [date, setDate] = useState('');
-  const completedItems: any[] = [];
-  const [todoListCompletedItems, setTodoListCompletedItems] = useState(completedItems);
+  const [todoListCompletedItems, setTodoListCompletedItems] = useState(() => {
+    const todoListData = localStorage.getItem('todoListItems');
+    return todoListData ? JSON.parse(todoListData) : [];
+  });
   const [todoToggle, setTodoToggle] = useState(false);
   const [dateToggle, setDateToggle] = useState(false);
   const [checked, setChecked] = useState(false);
@@ -70,6 +72,10 @@ export default function TodoList() {
     setDate('');
     setChecked(false);
     }
+
+    useEffect(() => {
+        localStorage.setItem("todoListItems", JSON.stringify(todoListCompletedItems));
+    }, [todoListCompletedItems]);
 
     const sortByTodo = () => {
       setTodoToggle(!todoToggle);

@@ -15,6 +15,7 @@ app.use(express.json());
 
 app.post('/sendMessage', async (req, res) => {
   // we need to store this todoList
+  // add webhooks for display todolist stuff (if message sent);
   try {
     console.log(req.body);
     const message = await client.messages.create({
@@ -30,8 +31,9 @@ app.post('/sendMessage', async (req, res) => {
 
 app.post('/sendEmail', async (req, res) => {
   console.log(req.body);
-  // add scheduling 
-  // 
+  // add scheduling
+  // add dynamic templates if possible?
+
   const msg = {
     to: 'tkamal8@gatech.edu', // Change to your recipient
     from: 'tawsifkamal123@gmail.com', // Change to your verified sender
