@@ -1,6 +1,8 @@
 require('dotenv').config();
 const twilio = require('twilio');
 const express = require('express');
+const MessagingResponse = require('twilio').twiml.MessagingResponse;
+const bodyParser = require('body-parser');
 const app = express();
 
 
@@ -12,6 +14,7 @@ const client = new twilio(accountSid, authToken);
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 app.use(express.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 
 app.post('/sendMessage', async (req, res) => {
   // we need to store this todoList
@@ -52,6 +55,21 @@ app.post('/sendEmail', async (req, res) => {
 
   res.send("email sent");
 });
+
+app.post('/sendReply', (req, res) => {
+  const twiml = new MessagingResponse();
+  if (req.body.Body === "Todo list") {
+    twiml.message("here are your todo Items!");
+  } else {
+    twiml.message("Hey bitch lol");
+  }
+  console.log(req.body.Body.toLowerCase())
+  res.send(twiml.toString());
+})
+
+app.get('/', (req, res) => {
+  res.send("Hello World");
+})
 
 app.listen(5000, () => {
   console.log("listening on port 5000");
