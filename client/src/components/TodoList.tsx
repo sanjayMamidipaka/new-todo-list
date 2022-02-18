@@ -205,7 +205,10 @@ export default function TodoList() {
                 <i className="fa-solid fa-circle-plus"></i>
               </button>
             </div>
-            <div>
+            <div className="tag-wrapper">
+              <Tag name="Bruv" key={99} theIndex={99} remove={removeElement} include={""}></Tag>
+              <Tag name="Bruh" key={99} theIndex={99} remove={removeElement} include={""}></Tag>
+              <Tag name="Bruj" key={99} theIndex={99} remove={removeElement} include={""}></Tag>
               {tagArray.map((tagObject: { name1: string, index1: number }) => {
                 return <Tag name={tagObject.name1} key={tagObject.index1} theIndex={tagObject.index1} remove={removeElement} include={"x"}></Tag>
               })}

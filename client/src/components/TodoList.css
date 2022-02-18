@@ -13,16 +13,32 @@
 
 }
 
-.input[type=text]::placeholder {
-    padding: 0 0 0 0.5rem;
+input[type=text], .date-input {
+    border: none;
+    border-bottom: solid 1px gray;
+    margin: 0 0.5rem;
+    transition: 0.125s all ease-in-out;
 }
 
-.input[type=text]:focus::placeholder {
-    color: transparent;
+input[type=text]::placeholder {
+    padding: 0 0 0 0.5rem;
+    opacity: 1;
+    transition: 0.23s all ease-in-out;
+}
+
+input[type=text]:focus, .date-input:focus {
+    outline: none;
+    margin-bottom: -3px;
+    border-bottom: 3px solid black;
+}
+
+input[type=text]:focus::placeholder {
+    opacity: 0;
 }
 
 .first-line {
     justify-content: space-between;
+    align-items: flex-end;
     margin-bottom: 2rem;
 }
 
