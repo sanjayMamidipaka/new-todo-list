@@ -202,7 +202,7 @@ export default function TodoList() {
                 onChange={(e) => setTagValue(e.target.value)}
               />
               <button type="submit" className="tag-btn" onClick={addNewTag}>
-                <i className="fa-solid fa-circle-plus"></i>
+              <i className="fa-solid fa-square-plus"></i>
               </button>
             </div>
           </div>

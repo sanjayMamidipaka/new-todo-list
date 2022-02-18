@@ -33,7 +33,7 @@ export default function TodoItem({ todoListItem, index, parentCallBack }: { todo
                     return <Tag name={tagObject.name1} key={tagObject.index1} theIndex={tagObject.index1} remove={() => { }} include={""}></Tag>
                 })}
             </div>
-            <h6 >by: {transformDate(dueDate)}</h6>
+            <h6 className="date-header">by: {transformDate(dueDate)}</h6>
         </div>
     )
 }

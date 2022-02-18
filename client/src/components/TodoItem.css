@@ -16,3 +16,7 @@ h1 {
 .todo-title {
     align-items: baseline;
 }
+
+.date-header {
+    color: rgb(100, 180, 255);
+}

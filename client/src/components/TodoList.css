@@ -26,6 +26,7 @@ input[type=text], .date-input {
     margin: 0 0.5rem;
     padding-bottom: 0.3rem;
     transition: 0.125s all ease-in-out;
+    font-weight: bold;
 }
 
 input[type=text]::placeholder {
@@ -37,7 +38,7 @@ input[type=text]::placeholder {
 input[type=text]:focus, .date-input:focus {
     outline: none;
     margin-bottom: -3px;
-    border-bottom: 3px solid black;
+    border-bottom: 3px solid rgb(100, 180, 255);
 }
 
 input[type=text]:focus::placeholder {
@@ -61,9 +62,30 @@ input[type=text]:focus::placeholder {
 }
 
 .tag-btn {
-    font-size: 1.4rem;
-    height: 2.4rem;
+    margin: 0 0.5rem;
+    background-color: rgb(100, 180, 255);
     border: none;
+    border-radius: 0.75rem;
+    color: white;
+    width: 100%;
+    align-self: stretch;
+    font-size: 2rem;
+    max-width: 4rem;
+    padding: 1rem;
+
+    position: relative;
+    bottom: 0;
+    transition: 0.125s all ease-in-out;
+}
+
+.tag-btn:hover {
+    box-shadow: 0 0.25rem 0.7rem rgb(177, 177, 177);
+    bottom: 0.25rem;
+}
+
+.tag-btn:active {
+    color: rgb(100, 180, 255);
+    background-color: white;
 }
 
 .date-input {
@@ -79,6 +101,7 @@ input[type=text]:focus::placeholder {
     width: 100%;
     align-self: stretch;
     font-size: 3rem;
+    min-width: 7rem;
 
     position: relative;
     bottom: 0;
