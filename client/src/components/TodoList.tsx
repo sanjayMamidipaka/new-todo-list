@@ -175,7 +175,7 @@ export default function TodoList() {
   }
   return (
     <div>
-      <div className="card">
+      <div className="top-wrapper">
         <div className="hbox">
           <div className="left">
             <div className="hbox first-line">
@@ -205,18 +205,18 @@ export default function TodoList() {
                 <i className="fa-solid fa-circle-plus"></i>
               </button>
             </div>
-            <div className="tag-wrapper">
-              <Tag name="Bruv" key={99} theIndex={99} remove={removeElement} include={""}></Tag>
-              <Tag name="Bruh" key={99} theIndex={99} remove={removeElement} include={""}></Tag>
-              <Tag name="Bruj" key={99} theIndex={99} remove={removeElement} include={""}></Tag>
-              {tagArray.map((tagObject: { name1: string, index1: number }) => {
-                return <Tag name={tagObject.name1} key={tagObject.index1} theIndex={tagObject.index1} remove={removeElement} include={"x"}></Tag>
-              })}
-            </div>
           </div>
-          <button type='submit' onClick={handleSubmit}>
+          <button type='submit' className="add-btn" onClick={handleSubmit}>
             <i className="fa-solid fa-circle-plus"></i>
           </button>
+        </div>
+        <div className="tag-wrapper">
+          {/* <Tag name="Bruv" key={99} theIndex={99} remove={removeElement} include={""}></Tag>
+              <Tag name="Bruh" key={99} theIndex={99} remove={removeElement} include={""}></Tag>
+              <Tag name="Bruj" key={99} theIndex={99} remove={removeElement} include={""}></Tag> */}
+          {tagArray.map((tagObject: { name1: string, index1: number }) => {
+            return <Tag name={tagObject.name1} key={tagObject.index1} theIndex={tagObject.index1} remove={removeElement} include={"x"}></Tag>
+          })}
         </div>
       </div>
 

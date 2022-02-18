@@ -1,0 +1,18 @@
+input[type=checkbox] {
+    width: 2rem;
+    height: 2rem;
+    margin-right: 1.5rem; 
+}
+
+input[type=checkbox]:checked + .todo-header {
+    text-decoration: line-through;
+    color: rgb(145, 145, 145);
+}
+
+h1 {
+    margin: 0;
+}
+
+.todo-title {
+    align-items: baseline;
+}
