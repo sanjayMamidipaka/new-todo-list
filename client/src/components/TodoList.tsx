@@ -220,11 +220,9 @@ export default function TodoList() {
         </div>
       </div>
 
-      <div className="card">
-        <div ></div>
+      <div className="sort-wrapper hbox">
         <button onClick={sortByDate}>date</button>
         <button onClick={sortByTodo}>todo</button>
-        <div ></div>
       </div>
 
       <div>
