@@ -36,7 +36,7 @@ input[type=text]::placeholder {
 
 input[type=text]:focus, .date-input:focus {
     outline: none;
-    margin-bottom: -3px;
+    margin-bottom: -2px;
     border-bottom: 3px solid rgb(100, 180, 255);
 }
 
