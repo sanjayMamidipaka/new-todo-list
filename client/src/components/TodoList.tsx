@@ -32,31 +32,31 @@ export default function TodoList() {
   const [dateToggle, setDateToggle] = useState(false);
   const [checked, setChecked] = useState(false);
 
-  const [tagArray, setTagArray] = useState<{ name1: string, index1: number }[]>([]);
+  const [tagArray, setTagArray] = useState<{name1: string, index1: number}[]>([]);
 
-  const addNewTag = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    if (tagValue !== "") {
-      setTagArray((tagArray: { name1: string, index1: number }[]) => {
-        return [...tagArray, { name1: tagValue, index1: index }];
-      });
+    const addNewTag = (e: React.MouseEvent<HTMLButtonElement>) => {
+      e.preventDefault();
+      if (tagValue !== "") {
+        setTagArray((tagArray: {name1: string, index1: number}[]) => {
+          return [...tagArray, {name1: tagValue, index1: index}];
+        });
+      }
+      setIndex(index + 1);
+      setTagValue('');
+
     }
-    setIndex(index + 1);
-    setTagValue('');
+    
+    const removeElement = (index: number) => {
+      setTagArray((tagArray)=>{
+        let newTagArray = tagArray.filter((tagObject) => tagObject.index1 !== index);
+        
+        return newTagArray;
+      })
+      
+    }
 
-  }
-
-  const removeElement = (index: number) => {
-    setTagArray((tagArray) => {
-      let newTagArray = tagArray.filter((tagObject) => tagObject.index1 !== index);
-
-      return newTagArray;
-    })
-
-  }
-
-  const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
-    const itemToAdd: any = {
+    const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
+      const itemToAdd: any = {
       title: title,
       dueDate: date,
       tagList: tagArray,
@@ -69,110 +69,119 @@ export default function TodoList() {
     setTagArray([]);
     setDate('');
     setChecked(false);
-  }
-
-  const sortByTodo = () => {
-    setTodoToggle(!todoToggle);
-
-    if (todoToggle === true) {
-      const newCompItems = todoListCompletedItems.sort((a, b) => {
-        const aChecked = a.checked;
-        const bChecked = b.checked;
-
-
-        if (aChecked > bChecked) {
-          return 1;
-        }
-
-        if (aChecked < bChecked) {
-          return -1;
-        }
-
-
-        return 0;
-      });
-
-      setTodoListCompletedItems(newCompItems);
-    }
-    else {
-      const newCompItems = todoListCompletedItems.sort((a, b) => {
-        const aChecked = a.checked;
-        const bChecked = b.checked;
-
-
-        if (aChecked < bChecked) {
-          return 1;
-        }
-
-        if (aChecked > bChecked) {
-          return -1;
-        }
-
-
-        return 0;
-      });
-
-      setTodoListCompletedItems(newCompItems);
-    }
-  }
-
-  const sortByDate = () => {
-    setDateToggle(!dateToggle);
-
-
-
-    if (dateToggle === true) {
-      const newCompItems = todoListCompletedItems.sort((a, b) => {
-        const aDate = new Date(a.dueDate);
-        const bDate = new Date(b.dueDate);
-
-        if (aDate < bDate) {
-          return 1;
-        }
-
-        if (aDate > bDate) {
-          return -1;
-        }
-
-
-        return 0;
-      });
-
-      setTodoListCompletedItems(newCompItems);
-    }
-    else {
-      const newCompItems = todoListCompletedItems.sort((a, b) => {
-        const aDate = new Date(a.dueDate);
-        const bDate = new Date(b.dueDate);
-
-        if (aDate > bDate) {
-          return 1;
-        }
-
-        if (aDate < bDate) {
-          return -1;
-        }
-
-
-        return 0;
-      });
-      setTodoListCompletedItems(newCompItems);
     }
 
-  }
+    const sortByTodo = () => {
+      setTodoToggle(!todoToggle);
 
-  var handleCallBack = (childData: boolean, index: string) => {
-    // let newTagArray = tagArray.filter((tagObject) => tagObject.index1 !== index);
-    todoListCompletedItems.forEach((item) => {
-      const { idx } = item;
-      if (index == idx) {
-        item.checked = childData;
+      if (todoToggle === true) {
+        const newCompItems = todoListCompletedItems.sort((a,b) => {
+          const aChecked = a.checked;
+          const bChecked = b.checked;
+
+
+          if (aChecked > bChecked) {
+            return 1;
+          }
+
+          if (aChecked < bChecked) {
+            return -1;
+          }
+
+          
+          return 0;
+        });
+
+        setTodoListCompletedItems(newCompItems);
       }
+      else {
+        const newCompItems = todoListCompletedItems.sort((a,b) => {
+          const aChecked = a.checked;
+          const bChecked = b.checked;
 
-    })
 
+          if (aChecked < bChecked) {
+            return 1;
+          }
 
-  }
+          if (aChecked > bChecked) {
+            return -1;
+          }
+
+          
+          return 0;
+        });
+
+        setTodoListCompletedItems(newCompItems);
+      }
+    }
+    
+    const sortByDate = () => {
+      setDateToggle(!dateToggle);
+      
+      
+      
+      if (dateToggle === true) {
+        const newCompItems = todoListCompletedItems.sort((a,b) => {
+          const aDate = new Date(a.dueDate);
+          const bDate = new Date(b.dueDate);
+
+          if (aDate < bDate) {
+            return 1;
+          }
+
+          if (aDate > bDate) {
+            return -1;
+          }
+
+          
+          return 0;
+        });
+
+        setTodoListCompletedItems(newCompItems);
+      }
+      else {
+        const newCompItems = todoListCompletedItems.sort((a,b) => {
+          const aDate = new Date(a.dueDate);
+          const bDate = new Date(b.dueDate);
+
+          if (aDate > bDate) {
+            return 1;
+          }
+
+          if (aDate < bDate) {
+            return -1;
+          }
+
+          
+          return 0;
+        });
+        setTodoListCompletedItems(newCompItems);
+      }
+      
+    }
+
+    var handleCallBack = (childData: boolean, index: string) =>{
+      todoListCompletedItems.forEach((item) => {
+        const {idx} = item;
+        if (index == idx) {
+          item.checked = childData;
+        }
+        
+      })
+
+      
+    }
+
+    const removeTodoItem = (index: number) => {
+      setTodoListCompletedItems((todoListCompletedItems)=>{
+        let newTodoListCompletedItems = todoListCompletedItems.filter((todoListItem) => todoListItem.idx !== index);
+        
+        return newTodoListCompletedItems;
+      })
+      
+    }
+
   return (
     <div>
       <div className="top-wrapper">
@@ -226,11 +235,11 @@ export default function TodoList() {
       </div>
 
       <div>
-        {todoListCompletedItems.map((todoListItem) => {
-          return <TodoItem todoListItem={todoListItem} key={todoListItem.idx} index={todoListItem.idx} parentCallBack={handleCallBack}></TodoItem>
-        })}
-      </div>
+          {todoListCompletedItems.map((todoListItem) => {
+            return <TodoItem todoListItem={todoListItem} key={todoListItem.idx} index={todoListItem.idx} parentCallBack={handleCallBack} removeHandler={removeTodoItem}></TodoItem>
+          })}
+        </div>
 
-    </div>
+        </div>
   )
 }
