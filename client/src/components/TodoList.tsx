@@ -210,7 +210,7 @@ export default function TodoList() {
             <i className="fa-solid fa-circle-plus"></i>
           </button>
         </div>
-        <div className="tag-wrapper">
+        <div className="tag-wrapper removable">
           {/* <Tag name="Bruv" key={99} theIndex={99} remove={removeElement} include={""}></Tag>
               <Tag name="Bruh" key={99} theIndex={99} remove={removeElement} include={""}></Tag>
               <Tag name="Bruj" key={99} theIndex={99} remove={removeElement} include={""}></Tag> */}

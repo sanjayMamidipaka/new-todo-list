@@ -22,7 +22,7 @@
     transition: 0.23s ease all;
 }
 
-.Tag:hover > i {
+.removable > .Tag:hover > i {
     width: auto;
     margin-right: 0.5rem;
     opacity: 100%;
