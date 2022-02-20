@@ -9,7 +9,7 @@ import axios from 'axios';
 //     return checked;
 // }
 
-export default function TodoItem({todoListItem, index, parentCallBack}: {todoListItem: any, index: string, parentCallBack: Function}) {
+export default function TodoItem({todoListItem, index, parentCallBack, removeHandler}: {todoListItem: any, index: string, parentCallBack: Function, removeHandler: Function}) {
     const {title, dueDate, tagList, completed} = todoListItem;
 
     const transformDate = (dueDate: string) => {
@@ -35,6 +35,7 @@ export default function TodoItem({todoListItem, index, parentCallBack}: {todoLis
                 console.log(e);
             }
         }
+        
 
         sendTwilioMessage();
        
@@ -46,17 +47,18 @@ export default function TodoItem({todoListItem, index, parentCallBack}: {todoLis
         //     <h6 className="date">by: {dueDate}</h6>
         <div className="card">
             <div className="grid-container">
-                <div className="grid-item">
+                <div className="hbox todo-title">
                     <input type="checkbox" onChange={(e)=> parentCallBack(e.target.checked, index)}/>
+                    <h1 className="todo-header">{title}</h1>
                 </div>
-                <div className="grid-item">
-                    <h1 style={{fontSize: '30px', marginBottom: '-15px'}}>{title}</h1>
+                <div className="tag-wrapper">
                     {tagList.map((tagObject: {name1: string, index1: number}, index: number) => {
                         return <Tag name={tagObject.name1} key={tagObject.index1} theIndex={tagObject.index1} remove={()=>{}} include={""}></Tag>
                     })}
                     </div>
-                <div className="grid-item"><h6 style={{fontSize: "10px"}}>by: {transformDate(dueDate)}</h6></div>  
+                <input type="checkbox" onChange={(e) => {removeHandler(index)}}/>
             </div>
+            <h6 className="date-header">by: {transformDate(dueDate)}</h6>
         </div>
     )
 }

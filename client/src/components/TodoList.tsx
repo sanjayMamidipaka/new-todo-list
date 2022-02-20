@@ -168,7 +168,6 @@ export default function TodoList() {
     }
 
     var handleCallBack = (childData: boolean, index: string) =>{
-      // let newTagArray = tagArray.filter((tagObject) => tagObject.index1 !== index);
       todoListCompletedItems.forEach((item) => {
         const {idx} = item;
         if (index == idx) {
@@ -179,58 +178,71 @@ export default function TodoList() {
 
       
     }
+
+    const removeTodoItem = (index: number) => {
+      setTodoListCompletedItems((todoListCompletedItems)=>{
+        let newTodoListCompletedItems = todoListCompletedItems.filter((todoListItem) => todoListItem.idx !== index);
+        
+        return newTodoListCompletedItems;
+      })
+      
+    }
+
   return (
     <div>
-  <div className="card">
-    <label htmlFor="nameLabel">Title </label>
-        <input
-          type="text"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-        />
-        <div style={{padding: '5px'}}></div>
-
-        <label htmlFor="tagLabel">Tags </label>
-        <input
-          type="text"
-          value={tagValue}
-          onChange={(e) => setTagValue(e.target.value)}
-        />
-        <button type="submit" onClick={addNewTag}>
-          Create new tag
-        </button>
-
-        <div>
-          {tagArray.map((tagObject: {name1: string, index1: number}) => {
+      <div className="top-wrapper">
+        <div className="hbox">
+          <div className="left">
+            <div className="hbox first-line">
+              <input className="title-input"
+                placeholder="Title"
+                type="text"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+              />
+              <input
+                className="date-input"
+                type="date"
+                value={date}
+                onChange={(e) => {
+                  setDate(e.target.value);
+                }} />
+            </div>
+            <div className="hbox">
+              <input
+                type="text"
+                className="tag-input"
+                placeholder="Add tags"
+                value={tagValue}
+                onChange={(e) => setTagValue(e.target.value)}
+              />
+              <button type="submit" className="tag-btn" onClick={addNewTag}>
+              <i className="fa-solid fa-square-plus"></i>
+              </button>
+            </div>
+          </div>
+          <button type='submit' className="add-btn" onClick={handleSubmit}>
+            <i className="fa-solid fa-circle-plus"></i>
+          </button>
+        </div>
+        <div className="tag-wrapper removable">
+          {/* <Tag name="Bruv" key={99} theIndex={99} remove={removeElement} include={""}></Tag>
+              <Tag name="Bruh" key={99} theIndex={99} remove={removeElement} include={""}></Tag>
+              <Tag name="Bruj" key={99} theIndex={99} remove={removeElement} include={""}></Tag> */}
+          {tagArray.map((tagObject: { name1: string, index1: number }) => {
             return <Tag name={tagObject.name1} key={tagObject.index1} theIndex={tagObject.index1} remove={removeElement} include={"x"}></Tag>
           })}
         </div>
-
-        <label htmlFor="dueDateLabel">Due Date </label>
-        <input
-          type="date"
-          value={date}
-          onChange={(e) => {
-            setDate(e.target.value);
-          }}
-        />
-
-        <div style={{padding: '15px'}} className = 'submitButton'>
-          <button style ={{width: '100%'}} type='submit' onClick={handleSubmit}>Create</button>
-        </div>
-
       </div>
 
-      <div className="card">
-          <div style={{padding: '10px'}}></div>
-          <button onClick={sortByDate}>date</button>
-          <button onClick={sortByTodo}>todo</button>
-          <div style={{padding: '10px'}}></div>
+      <div className="sort-wrapper hbox">
+        <button onClick={sortByDate}>date</button>
+        <button onClick={sortByTodo}>todo</button>
       </div>
 
       <div>
           {todoListCompletedItems.map((todoListItem) => {
-            return <TodoItem todoListItem={todoListItem} key={todoListItem.idx} index={todoListItem.idx} parentCallBack={handleCallBack}></TodoItem>
+            return <TodoItem todoListItem={todoListItem} key={todoListItem.idx} index={todoListItem.idx} parentCallBack={handleCallBack} removeHandler={removeTodoItem}></TodoItem>
           })}
         </div>
 
