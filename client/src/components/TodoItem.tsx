@@ -46,7 +46,7 @@ export default function TodoItem({todoListItem, index, parentCallBack, removeHan
                     <input type="checkbox" onChange={(e)=> parentCallBack(e.target.checked, index)}/>
                 </div>
                 <div className="grid-item">
-                    <h1 >{title}</h1>
+                    <h1 style={{fontSize: '30px', marginBottom: '-15px'}}>{title}</h1>
                     {tagList.map((tagObject: {name1: string, index1: number}, index: number) => {
                         return <Tag name={tagObject.name1} key={tagObject.index1} theIndex={tagObject.index1} remove={()=>{}} include={""}></Tag>
                     })}

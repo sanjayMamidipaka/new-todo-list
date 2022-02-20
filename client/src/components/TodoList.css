@@ -1,47 +1,17 @@
 .card {
-    margin: 2rem;
-    border-radius: 0.5rem;
-    padding: 2rem;
-    box-shadow: 0 0.25rem 0.7rem rgb(177, 177, 177);
-    transition: 0.125s all ease-in-out;
-    display: flex;
-    flex-flow: column nowrap;
+  /* Add shadows to create the "card" effect */
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transition: 0.3s;
+  width: 40%;
+  margin: 0 auto;
 }
 
+/* On mouse-over, add a deeper shadow */
 .card:hover {
-    box-shadow: 0 0.5rem 0.7rem gray;
-
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
 }
 
-.input[type=text]::placeholder {
-    padding: 0 0 0 0.5rem;
-}
-
-.input[type=text]:focus::placeholder {
-    color: transparent;
-}
-
-.first-line {
-    justify-content: space-between;
-    margin-bottom: 2rem;
-}
-
-.title-input {
-    font-size: 2.2rem;
-    height: 2.5rem;
-}
-
-.tag-input {
-    font-size: 1.4rem;
-    height: 2.4rem;
-}
-
-.tag-btn {
-    font-size: 1.4rem;
-    height: 2.4rem;
-    border: none;
-}
-
-.date-input {
-    font-size: 1.7rem;
+/* Add some padding inside the card container */
+.container {
+  padding: 2px 16px;
 }

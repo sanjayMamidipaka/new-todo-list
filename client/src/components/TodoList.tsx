@@ -32,31 +32,31 @@ export default function TodoList() {
   const [dateToggle, setDateToggle] = useState(false);
   const [checked, setChecked] = useState(false);
 
-  const [tagArray, setTagArray] = useState<{ name1: string, index1: number }[]>([]);
+  const [tagArray, setTagArray] = useState<{name1: string, index1: number}[]>([]);
 
-  const addNewTag = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    if (tagValue !== "") {
-      setTagArray((tagArray: { name1: string, index1: number }[]) => {
-        return [...tagArray, { name1: tagValue, index1: index }];
-      });
+    const addNewTag = (e: React.MouseEvent<HTMLButtonElement>) => {
+      e.preventDefault();
+      if (tagValue !== "") {
+        setTagArray((tagArray: {name1: string, index1: number}[]) => {
+          return [...tagArray, {name1: tagValue, index1: index}];
+        });
+      }
+      setIndex(index + 1);
+      setTagValue('');
+
     }
-    setIndex(index + 1);
-    setTagValue('');
+    
+    const removeElement = (index: number) => {
+      setTagArray((tagArray)=>{
+        let newTagArray = tagArray.filter((tagObject) => tagObject.index1 !== index);
+        
+        return newTagArray;
+      })
+      
+    }
 
-  }
-
-  const removeElement = (index: number) => {
-    setTagArray((tagArray) => {
-      let newTagArray = tagArray.filter((tagObject) => tagObject.index1 !== index);
-
-      return newTagArray;
-    })
-
-  }
-
-  const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
-    const itemToAdd: any = {
+    const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
+      const itemToAdd: any = {
       title: title,
       dueDate: date,
       tagList: tagArray,
@@ -69,85 +69,97 @@ export default function TodoList() {
     setTagArray([]);
     setDate('');
     setChecked(false);
-  }
-
-  const sortByTodo = () => {
-    setTodoToggle(!todoToggle);
-
-    if (todoToggle === true) {
-      const newCompItems = todoListCompletedItems.sort((a, b) => {
-        const aChecked = a.checked;
-        const bChecked = b.checked;
-
-
-        if (aChecked > bChecked) {
-          return 1;
-        }
-
-        if (aChecked < bChecked) {
-          return -1;
-        }
-
-
-        return 0;
-      });
-
-      setTodoListCompletedItems(newCompItems);
     }
-    else {
-      const newCompItems = todoListCompletedItems.sort((a, b) => {
-        const aChecked = a.checked;
-        const bChecked = b.checked;
+
+    const sortByTodo = () => {
+      setTodoToggle(!todoToggle);
+
+      if (todoToggle === true) {
+        const newCompItems = todoListCompletedItems.sort((a,b) => {
+          const aChecked = a.checked;
+          const bChecked = b.checked;
 
 
-        if (aChecked < bChecked) {
-          return 1;
-        }
+          if (aChecked > bChecked) {
+            return 1;
+          }
 
-        if (aChecked > bChecked) {
-          return -1;
-        }
+          if (aChecked < bChecked) {
+            return -1;
+          }
+
+          
+          return 0;
+        });
+
+        setTodoListCompletedItems(newCompItems);
+      }
+      else {
+        const newCompItems = todoListCompletedItems.sort((a,b) => {
+          const aChecked = a.checked;
+          const bChecked = b.checked;
 
 
-        return 0;
-      });
+          if (aChecked < bChecked) {
+            return 1;
+          }
 
-      setTodoListCompletedItems(newCompItems);
+          if (aChecked > bChecked) {
+            return -1;
+          }
+
+          
+          return 0;
+        });
+
+        setTodoListCompletedItems(newCompItems);
+      }
     }
-  }
+    
+    const sortByDate = () => {
+      setDateToggle(!dateToggle);
+      
+      
+      
+      if (dateToggle === true) {
+        const newCompItems = todoListCompletedItems.sort((a,b) => {
+          const aDate = new Date(a.dueDate);
+          const bDate = new Date(b.dueDate);
 
-  const sortByDate = () => {
-    setDateToggle(!dateToggle);
+          if (aDate < bDate) {
+            return 1;
+          }
 
+          if (aDate > bDate) {
+            return -1;
+          }
 
+          
+          return 0;
+        });
 
-    if (dateToggle === true) {
-      const newCompItems = todoListCompletedItems.sort((a, b) => {
-        const aDate = new Date(a.dueDate);
-        const bDate = new Date(b.dueDate);
+        setTodoListCompletedItems(newCompItems);
+      }
+      else {
+        const newCompItems = todoListCompletedItems.sort((a,b) => {
+          const aDate = new Date(a.dueDate);
+          const bDate = new Date(b.dueDate);
 
-        if (aDate < bDate) {
-          return 1;
-        }
+          if (aDate > bDate) {
+            return 1;
+          }
 
-        if (aDate > bDate) {
-          return -1;
-        }
+          if (aDate < bDate) {
+            return -1;
+          }
 
-
-        return 0;
-      });
-
-      setTodoListCompletedItems(newCompItems);
+          
+          return 0;
+        });
+        setTodoListCompletedItems(newCompItems);
+      }
+      
     }
-    else {
-      const newCompItems = todoListCompletedItems.sort((a, b) => {
-        const aDate = new Date(a.dueDate);
-        const bDate = new Date(b.dueDate);
-
-        if (aDate > bDate) {
-          return 1;
-        }
 
     var handleCallBack = (childData: boolean, index: string) =>{
       todoListCompletedItems.forEach((item) => {
@@ -155,11 +167,10 @@ export default function TodoList() {
         if (index == idx) {
           item.checked = childData;
         }
+        
+      })
 
-
-        return 0;
-      });
-      setTodoListCompletedItems(newCompItems);
+      
     }
 
     const removeTodoItem = (index: number) => {
@@ -173,53 +184,51 @@ export default function TodoList() {
 
   return (
     <div>
-      <div className="card">
-        <div className="hbox">
-          <div className="left">
-            <div className="hbox first-line">
-              <input className="title-input"
-                placeholder="Title"
-                type="text"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-              />
-              <input
-                className="date-input"
-                type="date"
-                value={date}
-                onChange={(e) => {
-                  setDate(e.target.value);
-                }} />
-            </div>
-            <div className="hbox">
-              <input
-                type="text"
-                className="tag-input"
-                placeholder="Add tags"
-                value={tagValue}
-                onChange={(e) => setTagValue(e.target.value)}
-              />
-              <button type="submit" className="tag-btn" onClick={addNewTag}>
-                <i className="fa-solid fa-circle-plus"></i>
-              </button>
-            </div>
-            <div>
-              {tagArray.map((tagObject: { name1: string, index1: number }) => {
-                return <Tag name={tagObject.name1} key={tagObject.index1} theIndex={tagObject.index1} remove={removeElement} include={"x"}></Tag>
-              })}
-            </div>
-          </div>
-          <button type='submit' onClick={handleSubmit}>
-            <i className="fa-solid fa-circle-plus"></i>
-          </button>
+  <div className="card">
+    <label htmlFor="nameLabel">Title </label>
+        <input
+          type="text"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+        />
+        <div style={{padding: '5px'}}></div>
+
+        <label htmlFor="tagLabel">Tags </label>
+        <input
+          type="text"
+          value={tagValue}
+          onChange={(e) => setTagValue(e.target.value)}
+        />
+        <button type="submit" onClick={addNewTag}>
+          Create new tag
+        </button>
+
+        <div>
+          {tagArray.map((tagObject: {name1: string, index1: number}) => {
+            return <Tag name={tagObject.name1} key={tagObject.index1} theIndex={tagObject.index1} remove={removeElement} include={"x"}></Tag>
+          })}
         </div>
+
+        <label htmlFor="dueDateLabel">Due Date </label>
+        <input
+          type="date"
+          value={date}
+          onChange={(e) => {
+            setDate(e.target.value);
+          }}
+        />
+
+        <div style={{padding: '15px'}} className = 'submitButton'>
+          <button style ={{width: '100%'}} type='submit' onClick={handleSubmit}>Create</button>
+        </div>
+
       </div>
 
       <div className="card">
-        <div ></div>
-        <button onClick={sortByDate}>date</button>
-        <button onClick={sortByTodo}>todo</button>
-        <div ></div>
+          <div style={{padding: '10px'}}></div>
+          <button onClick={sortByDate}>date</button>
+          <button onClick={sortByTodo}>todo</button>
+          <div style={{padding: '10px'}}></div>
       </div>
 
       <div>
@@ -228,6 +237,6 @@ export default function TodoList() {
           })}
         </div>
 
-    </div>
+        </div>
   )
 }
