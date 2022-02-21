@@ -1,8 +1,9 @@
 import React, { EventHandler, useEffect } from 'react'
 import './TodoList.css'
-import { useState } from 'react'
+import { useState, useContext } from 'react'
 import Tag from './Tag'
 import TodoItem from './TodoItem'
+import {emailContext} from './Context'
 /**
  * Thank you for applying to Bits of Good. You are free to add/delete/modify any 
  * parts of this project. That includes changing the types.ts, creating css files, 
@@ -25,7 +26,7 @@ export default function TodoList() {
   const [title, setTitle] = useState('');
   const [tagValue, setTagValue] = useState('');
   const [index, setIndex] = useState(0);
-  const [date, setDate] = useState('');
+  const [date, setDate] = useState(((new Date()).toLocaleDateString('en-CA') + 'T' + (new Date).toLocaleTimeString('it-IT')).substring(0,16));
   const [todoListCompletedItems, setTodoListCompletedItems] = useState(() => {
     const todoListData = localStorage.getItem('todoListItems');
     return todoListData ? JSON.parse(todoListData) : [];
@@ -35,6 +36,8 @@ export default function TodoList() {
   const [checked, setChecked] = useState(false);
 
   const [tagArray, setTagArray] = useState<{name1: string, index1: number}[]>([]);
+
+  const [email, setEmail] = useContext(emailContext);
 
     const addNewTag = (e: React.MouseEvent<HTMLButtonElement>) => {
       e.preventDefault();
@@ -58,7 +61,7 @@ export default function TodoList() {
     }
 
     const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
-      const itemToAdd: any = {
+      const itemToAdd: any = { //ITEM FORMAT
       title: title,
       dueDate: date,
       tagList: tagArray,
@@ -69,8 +72,9 @@ export default function TodoList() {
     setTitle('');
     setTodoListCompletedItems([...todoListCompletedItems, itemToAdd]);
     setTagArray([]);
-    setDate('');
+    setDate(((new Date()).toLocaleDateString('en-CA') + 'T' + (new Date).toLocaleTimeString('it-IT')).substring(0,16));
     setChecked(false);
+    console.log(email);
     }
 
     useEffect(() => {
@@ -200,9 +204,9 @@ export default function TodoList() {
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
               />
-              <input
+                <input
                 className="date-input"
-                type="date"
+                type="datetime-local"
                 value={date}
                 onChange={(e) => {
                   setDate(e.target.value);
@@ -233,6 +237,7 @@ export default function TodoList() {
             return <Tag name={tagObject.name1} key={tagObject.index1} theIndex={tagObject.index1} remove={removeElement} include={"x"}></Tag>
           })}
         </div>
+
       </div>
 
       <div className="sort-wrapper hbox">
