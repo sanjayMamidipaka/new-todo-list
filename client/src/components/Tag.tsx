@@ -3,9 +3,10 @@ import './Tag.css'
 
 function Tag({name, theIndex, remove, include}: {name: string, theIndex: number, remove: Function, include: string}) {
     return (
-        <p className='Tag' onClick={(e) => remove(theIndex)}>
-            <span style={{fontWeight: "bold"}}>{include}</span> {name}
-        </p>
+        <div className='Tag' onClick={(e) => remove(theIndex)}>
+                <i className="fa-solid fa-circle-xmark"></i>
+                {name}
+        </div>
     )
 }
 
