@@ -78,7 +78,7 @@ app.get('/createContact', (req, res) => { // this needs to be post for the email
   const data = {
     "contacts": [
       {
-        "email": "ryan39@lee-young.com"
+        "email": "tkamal8@gatech.edu"
       }
     ]
   };
@@ -105,11 +105,12 @@ app.get('/createSingleSend', (req, res) => {
     send_to: {
       all: true
     },
-    send_at: "now",
     email_config: {
       subject: "test Email",
-      html_content: "<strong>Today you have haha to do on this date</strong>"
-    },
+      html_content: "<strong>Today you have haha to do on this date</strong>",
+      suppression_group_id: 18085,
+      sender_id: 3046677
+    }
   };
 
   const request = {
@@ -148,12 +149,12 @@ app.get('/getAllSingleSends', (req, res) => {
 })
 
 app.get('/updateSingleSend', (req, res) => {
-  const id = "8049e645-91e3-11ec-a043-cacd8b33bf37";
+  const id = "c52f71e5-933e-11ec-b4e4-f62412e742cf";
   const data = {
     "name": "Miss Christine Morgan",
     email_config: {
-      "suppression_group_id": 18943,
-      "sender_id": 2834228,
+      "suppression_group_id": 18085,
+      "sender_id": 3046677,
       "subject": "test Email",
       "html_content": "<strong>Today you have haha to do on this date</strong>"
     },
@@ -178,7 +179,7 @@ app.get('/updateSingleSend', (req, res) => {
 })
 
 app.get('/scheduleSingleSend',(req, res) => {
-  const id = "8049e645-91e3-11ec-a043-cacd8b33bf37";
+  const id = "c52f71e5-933e-11ec-b4e4-f62412e742cf";
 const data = {
   "send_at": "now"
 };
