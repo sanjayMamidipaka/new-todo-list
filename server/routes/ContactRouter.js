@@ -1,4 +1,5 @@
-const {createContact} = require('../controllers/ContactController');
+const {createContact, getAllContacts} = require('../controllers/ContactController');
+const {createList} = require('../controllers/ListController');
 
 // Router for contact API
 const express = require("express");
@@ -8,7 +9,8 @@ router.get('/', (req, res) => {
     res.send("hello world");
 })
 
-router.get('/createContact', createContact);
+router.put('/createContact', createList, createContact);
+router.get('/getContacts', getAllContacts);
 
 
 module.exports = router; 

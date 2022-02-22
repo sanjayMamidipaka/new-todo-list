@@ -2,11 +2,15 @@ require('dotenv').config();
 const clientSendGrid = require('@sendgrid/client');
 clientSendGrid.setApiKey(process.env.SENDGRID_API_KEY);
 
-const createContact = (req, res, next) => { 
+const createContact = async (req, res, next) => {
+    // update email error handling
     const data = {
+      "list_ids": [
+        res.locals.listId
+      ],
       "contacts": [
         {
-          "email": "tkamal8@gatech.edu"
+          "email": req.body.email
         }
       ]
     };
@@ -17,15 +21,35 @@ const createContact = (req, res, next) => {
       body: data
     }
 
-    clientSendGrid.request(request)
-      .then((response) => {
-        console.log(response);
-      })
-      .catch(error => {
-        console.error(error.response.body);
-      });
+    try {
+      await clientSendGrid.request(request);
+      res.send(res.locals.listId);
+    } catch(e) {
+      console.log(e);
+      res.send(e);
+    }    
+}
+
+const getAllContacts = async (req, res, next) => {
+
+  const request = {
+    url: `/v3/marketing/contacts`,
+    method: 'GET',
+  }
+  
+  try {
+    const response = await clientSendGrid.request(request);
+    console.log(response);
+    res.send(response);
+  } catch(e) {
+    console.log(e);
+    res.send(e);
+  }
+  
+    
 }
 
 module.exports = {
-    createContact
+    createContact,
+    getAllContacts
 }

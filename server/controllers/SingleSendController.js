@@ -32,13 +32,13 @@ const sendEmail = (req, res, next) => {
 
 const createSingleSend = (req, res, next) => {
   const data = {
-    "name": "Miss Christine Morgan",
+    "name": "TodoItem:" + req.body.title,
     send_to: {
-      all: true
+      list_ids: ["5ccd8d45-5088-4376-944f-9928da9c2f73"]
     },
     email_config: {
-      subject: "test Email",
-      html_content: "<strong>Today you have haha to do on this date</strong>",
+      subject: "Reminder!" + req.body.title,
+      html_content: `<strong>You have to do ${req.body.title} in an hour!</strong>`,
       suppression_group_id: 18085,
       sender_id: 3046677
     }
@@ -53,7 +53,7 @@ const createSingleSend = (req, res, next) => {
   clientSendGrid.request(request)
     .then((response) => {
       console.log(response);
-      res.send("Success");
+      res.send(response);
     })
     .catch(error => {
       console.error(error.response.body);

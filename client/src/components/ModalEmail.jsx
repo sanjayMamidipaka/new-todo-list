@@ -2,17 +2,23 @@ import React, { EventHandler, useEffect } from 'react'
 import { useState, useContext } from 'react'
 import TodoItem from './TodoItem'
 import {Modal, Button, Form} from 'react-bootstrap'
-// import 'bootstrap/dist/css/bootstrap.min.css'; this line of code isn't working
+import 'bootstrap/dist/css/bootstrap.min.css'; 
 import {emailContext} from './Context'
+import axios from 'axios';
 
 function ModalEmail() {
     const [show, setShow] = useState(false);
-
     const [email, setEmail] = useContext(emailContext);
 
-    const handleEmail = () => {
+    const handleEmail = async () => {
+      try {
+        const emailListId = (await axios.put("/sendgrid/api/contacts/createContact", {email})).data
+        localStorage.setItem("email", JSON.stringify({email, emailListId}));
         setShow(false);
-        console.log(email);
+        console.log(emailListId)
+      } catch(e) {
+        console.log(e);
+      }
     };
 
     const handleClose = () => setShow(false);
@@ -20,7 +26,7 @@ function ModalEmail() {
 
     return (     
         <div>
-        <Button variant='primary' onClick={handleShow}>Set Your Email!</Button>            
+        <Button variant='primary' onClick={handleShow}>{localStorage.getItem("email") === "" ? "Set Your Email" : "Update Your Email"}</Button>            
         <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Choose an email to receive reminders</Modal.Title>

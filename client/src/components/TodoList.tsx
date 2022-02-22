@@ -62,19 +62,19 @@ export default function TodoList() {
 
     const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
       const itemToAdd: any = { //ITEM FORMAT
-      title: title,
-      dueDate: date,
-      tagList: tagArray,
-      completed: false,
-      idx: new Date().getTime().toString(),
-      checked: checked,
-    }
-    setTitle('');
-    setTodoListCompletedItems([...todoListCompletedItems, itemToAdd]);
-    setTagArray([]);
-    setDate(((new Date()).toLocaleDateString('en-CA') + 'T' + (new Date).toLocaleTimeString('it-IT')).substring(0,16));
-    setChecked(false);
-    console.log(email);
+        title: title,
+        dueDate: date,
+        tagList: tagArray,
+        completed: false,
+        idx: new Date().getTime().toString(),
+        checked: checked,
+      }
+      setTitle('');
+      setTodoListCompletedItems([...todoListCompletedItems, itemToAdd]);
+      setTagArray([]);
+      setDate(((new Date()).toLocaleDateString('en-CA') + 'T' + (new Date).toLocaleTimeString('it-IT')).substring(0,16));
+      setChecked(false);
+
     }
 
     useEffect(() => {
