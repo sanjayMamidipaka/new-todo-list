@@ -16,7 +16,7 @@ router.get('/', (req, res) => {
 })
 
 router.get('/sendEmail', sendEmail);
-router.get('/createSingleSend', createSingleSend);
+router.post('/createSingleSend', createSingleSend, scheduleSingleSend);
 router.get('/getAllSingleSends', getAllSingleSends);
 router.get('/updateSingleSend', updateSingleSend);
 router.get('/scheduleSingleSend', scheduleSingleSend);

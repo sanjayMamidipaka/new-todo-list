@@ -4,6 +4,8 @@ import { useState, useContext } from 'react'
 import Tag from './Tag'
 import TodoItem from './TodoItem'
 import {emailContext} from './Context'
+import transformDate from './dateUtility'
+import axios from 'axios';
 /**
  * Thank you for applying to Bits of Good. You are free to add/delete/modify any 
  * parts of this project. That includes changing the types.ts, creating css files, 
@@ -37,7 +39,6 @@ export default function TodoList() {
 
   const [tagArray, setTagArray] = useState<{name1: string, index1: number}[]>([]);
 
-  const [email, setEmail] = useContext(emailContext);
 
     const addNewTag = (e: React.MouseEvent<HTMLButtonElement>) => {
       e.preventDefault();
@@ -60,21 +61,45 @@ export default function TodoList() {
       
     }
 
-    const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
-      const itemToAdd: any = { //ITEM FORMAT
-        title: title,
-        dueDate: date,
-        tagList: tagArray,
-        completed: false,
-        idx: new Date().getTime().toString(),
-        checked: checked,
-      }
-      setTitle('');
-      setTodoListCompletedItems([...todoListCompletedItems, itemToAdd]);
-      setTagArray([]);
-      setDate(((new Date()).toLocaleDateString('en-CA') + 'T' + (new Date).toLocaleTimeString('it-IT')).substring(0,16));
-      setChecked(false);
+    const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
 
+      try {
+
+        const transformedDate = transformDate(date); 
+        const currentTagArray = tagArray;
+        const currentTitle = title;
+        const emailStringObject = localStorage.getItem("email");
+        const listId = emailStringObject !== null ? JSON.parse(emailStringObject).emailListId : null;
+
+        const body = {
+          transformedDate,
+          currentTitle,
+          currentTagArray,
+          listId
+      }
+
+        const itemToAdd: any = { //ITEM FORMAT
+          title: title,
+          dueDate: date,
+          tagList: tagArray,
+          completed: false,
+          idx: new Date().getTime().toString(),
+          checked: checked,
+        }
+    
+        setTitle('');
+        setTodoListCompletedItems([...todoListCompletedItems, itemToAdd]);
+        setTagArray([]);
+        setDate(((new Date()).toLocaleDateString('en-CA') + 'T' + (new Date).toLocaleTimeString('it-IT')).substring(0,16));
+        setChecked(false);
+        
+       
+
+        await axios.post('/sendgrid/api/singleSend/createSingleSend', body);
+
+      } catch(error) {
+        console.log(error);
+      }
     }
 
     useEffect(() => {

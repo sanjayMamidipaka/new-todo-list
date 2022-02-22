@@ -3,43 +3,14 @@ import { transform } from 'typescript';
 import { useState } from 'react';
 import Tag from './Tag';
 import './TodoItem.css';
-import axios from 'axios';
+import transformDate from './dateUtility';
 
 // export const isChecked = () => {
 //     return checked;
 // }
 
 export default function TodoItem({todoListItem, index, parentCallBack, removeHandler}: {todoListItem: any, index: string, parentCallBack: Function, removeHandler: Function}) {
-    const {title, dueDate, tagList, completed} = todoListItem;
-
-    const transformDate = (dueDate: string) => {
-        const date: string = dueDate;
-        const beforeSplit = date.split('T');
-        const splitted = beforeSplit[0].split('-')
-        const newDate = splitted[1] + "/" + splitted[2] + "/" + splitted[0] + " " + beforeSplit[1];
-        return newDate
-    }
-
-    useEffect(() => {
-        async function sendTwilioMessage() {
-            try {
-                const date = transformDate(dueDate);
-                const body = {
-                    date,
-                    title,
-                    tagList
-                }
-                const result = (await axios.post('/sendEmail', body)).data;
-                console.log(result);
-            } catch(e) {
-                console.log(e);
-            }
-        }
-        
-
-        sendTwilioMessage();
-       
-    }, [])
+    const {title, dueDate, tagList} = todoListItem;
     
     return (
         // <div className="card">

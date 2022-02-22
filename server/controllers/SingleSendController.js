@@ -30,15 +30,15 @@ const sendEmail = (req, res, next) => {
     res.send("email sent");
 }
 
-const createSingleSend = (req, res, next) => {
+const createSingleSend = async (req, res, next) => {
   const data = {
     "name": "TodoItem:" + req.body.title,
     send_to: {
-      list_ids: ["5ccd8d45-5088-4376-944f-9928da9c2f73"]
+      list_ids: [req.body.listId]
     },
     email_config: {
-      subject: "Reminder!" + req.body.title,
-      html_content: `<strong>You have to do ${req.body.title} in an hour!</strong>`,
+      subject: "Reminder!" + req.body.currentTitle,
+      html_content: `<strong>You have to do ${req.body.currentTitle} in an hour!</strong>`,
       suppression_group_id: 18085,
       sender_id: 3046677
     }
@@ -50,15 +50,14 @@ const createSingleSend = (req, res, next) => {
     body: data
   }
 
-  clientSendGrid.request(request)
-    .then((response) => {
-      console.log(response);
-      res.send(response);
-    })
-    .catch(error => {
-      console.error(error.response.body);
-      res.send(error);
-    });
+  try {
+    const response = await clientSendGrid.request(request);
+    res.locals.singleSendId = response[0].body.id;
+    console.log(response);
+    next();
+  } catch(e) {
+    console.log(e.response.body);
+  } 
 }
 
 const getAllSingleSends = (req, res, next) => {
@@ -69,7 +68,7 @@ const getAllSingleSends = (req, res, next) => {
     
   clientSendGrid.request(request)
     .then((response) => {
-      console.log(response[0].body);
+      console.log(response[0].body.id);
       res.send(JSON.stringify(response));
     })
     .catch(error => {
@@ -108,26 +107,24 @@ const updateSingleSend = (req, res, next) => {
     });
 }
 
-const scheduleSingleSend = (req, res, next) => {
-  const id = "d95d7ffd-933f-11ec-a7ee-823255f80a5a";
-  const data = {
-  "send_at": "now"
-  };
-
-  const request = {
-    url: `/v3/marketing/singlesends/${id}/schedule`,
-    method: 'PUT',
-    body: data
+const scheduleSingleSend = async (req, res, next) => {
+  try {
+    const data = {
+      "send_at": "now"
+      };
+    
+      const request = {
+        url: `/v3/marketing/singlesends/${res.locals.singleSendId}/schedule`,
+        method: 'PUT',
+        body: data
+      }
+    
+      const response = await clientSendGrid.request(request);
+      console.log(response);
+  } catch(e) {
+    console.log(e);
   }
-
-  clientSendGrid.request(request)
-    .then((response) => {
-      console.log(response);
-      console.log(response);
-    })
-    .catch(error => {
-      console.error(error.response.body);
-    });
+ 
 }
 
 const getVerifiedSenders = (req, res, next) => {
