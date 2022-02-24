@@ -9,7 +9,7 @@ This app was built using React on the front end.
 With this web app, you can create todo items, add tags to those tags, and receive emails when the tasks are approaching (via Twilio SendGrid API)
 Additionally, you can sort the todo items by completion status and due date.
 
-### Backend
+# Backend
 ### Backend Framework
 This app uses Express (built on Node.js) to create various endpoints to communicate with the Twilio SendGrid API.
 
