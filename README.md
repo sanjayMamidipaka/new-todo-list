@@ -13,8 +13,10 @@ Additionally, you can sort the todo items by completion status and due date.
 ### Backend Framework
 This app uses Express (built on Node.js) to create various endpoints to communicate with the Twilio SendGrid API.
 
-### Todo
+# Improvements
 Still need to work on hosting the app via Heroku and user error handling.
+
+
 
 #### Sample
 
