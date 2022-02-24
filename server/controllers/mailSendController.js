@@ -62,7 +62,7 @@ async function sendMail(req, res, next) {
             if (error.message.includes("Scheduling more than")) {
                 schedulingError = true;
                 console.log("scheduling error")
-                res.send("Cannot schedule past more than 72 hours!");
+                res.send(new Error("Cannot schedule past 72 hours!"));
             }
         });
        
