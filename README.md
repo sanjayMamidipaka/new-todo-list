@@ -20,4 +20,4 @@ Still need to work on hosting the app via Heroku and user error handling.
 
 #### Sample
 
-![alt text] (https://user-images.githubusercontent.com/43594347/155611930-64825ba1-5228-4797-ad5b-1aabd8819a13.png)
+![Frontend](https://user-images.githubusercontent.com/43594347/155611930-64825ba1-5228-4797-ad5b-1aabd8819a13.png)
