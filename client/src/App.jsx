@@ -7,7 +7,7 @@ import {useState} from 'react';
 
 function App() {
   // getting email from localStorage
-  const email = JSON.parse(localStorage.getItem("email")).email;
+  const email = localStorage.getItem("email");
   const emailState = useState(email);
 
   return (

@@ -4,7 +4,7 @@ import TodoItem from './TodoItem'
 import {Modal, Button, Form} from 'react-bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css'; 
 import {emailContext} from './Context'
-import axios from 'axios';
+import {validateEmail} from '../utility/utilityFunctions';
 
 function ModalEmail() {
     const [show, setShow] = useState(false);
@@ -12,10 +12,14 @@ function ModalEmail() {
 
     const handleEmail = async () => {
       try {
-        const emailListId = (await axios.put("/sendgrid/api/contacts/createContact", {email})).data
-        localStorage.setItem("email", JSON.stringify({email, emailListId}));
-        setShow(false);
-        console.log(emailListId)
+        console.log(email);
+        if (validateEmail(email) === null) {
+          alert("Enter a correct email!");
+        } else {
+          localStorage.setItem("email", email);
+          setShow(false);
+        }
+        
       } catch(e) {
         console.log(e);
       }
@@ -23,10 +27,11 @@ function ModalEmail() {
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+    console.log(localStorage.getItem("email"));
 
     return (     
         <div>
-        <Button variant='primary' onClick={handleShow}>{localStorage.getItem("email") === "" ? "Set Your Email" : "Update Your Email"}</Button>            
+        <Button variant='primary' onClick={handleShow}>{localStorage.getItem("email") === null ? "Set Your Email" : "Update Your Email"}</Button>            
         <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Choose an email to receive reminders</Modal.Title>

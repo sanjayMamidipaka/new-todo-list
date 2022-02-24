@@ -1,6 +1,7 @@
 require('dotenv').config();
 const sgMail = require('@sendgrid/mail');
 const clientSendGrid = require('@sendgrid/client');
+const withinHour = require('../utility/utilityFunctions');
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 clientSendGrid.setApiKey(process.env.SENDGRID_API_KEY);
 
@@ -31,6 +32,14 @@ const sendEmail = (req, res, next) => {
 }
 
 const createSingleSend = async (req, res, next) => {
+  const dateZulu = req.body.dateZulu;
+  let html_content;
+  if (withinHour(dateZulu)) {
+    html_content = `<strong>You have to do ${req.body.currentTitle} within an hour!</strong>`
+  } else {
+    html_content = `<strong>You have to do ${req.body.currentTitle} in an hour!</strong>`;
+  }
+  
   const data = {
     "name": "TodoItem:" + req.body.title,
     send_to: {
@@ -38,7 +47,7 @@ const createSingleSend = async (req, res, next) => {
     },
     email_config: {
       subject: "Reminder!" + req.body.currentTitle,
-      html_content: `<strong>You have to do ${req.body.currentTitle} in an hour!</strong>`,
+      html_content: html_content,
       suppression_group_id: 18085,
       sender_id: 3046677
     }
@@ -50,13 +59,14 @@ const createSingleSend = async (req, res, next) => {
     body: data
   }
 
+  console.log(req.body.dateZulu);
+
   try {
     const response = await clientSendGrid.request(request);
     res.locals.singleSendId = response[0].body.id;
-    console.log(response);
     next();
   } catch(e) {
-    console.log(e.response.body);
+    console.log(e);
   } 
 }
 
@@ -107,25 +117,40 @@ const updateSingleSend = (req, res, next) => {
     });
 }
 
-const scheduleSingleSend = async (req, res, next) => {
-  try {
-    const data = {
-      "send_at": "now"
-      };
+// const scheduleSingleSend = async (req, res, next) => {
+//   try {
+//     const dateZulu = req.body.dateZulu
+//     let send_at;
+
+
+//     console.log(dateZulu);
+//     if (withinHour(dateZulu)) {
+//       send_at = "now";
+//       console.log("SEND NOW!!!");
+//     } else {
+//       // send an hour before ()
+//       send_at = new Date(new Date(dateZulu).getTime() - 3600000).toISOString();
+//       console.log("SEND LATER!!!");
+//     }
+
+//     data = {
+//       "send_at": send_at
+//       };
+     
     
-      const request = {
-        url: `/v3/marketing/singlesends/${res.locals.singleSendId}/schedule`,
-        method: 'PUT',
-        body: data
-      }
+//     const request = {
+//       url: `/v3/marketing/singlesends/${res.locals.singleSendId}/schedule`,
+//       method: 'PUT',
+//       body: data
+//     }
     
-      const response = await clientSendGrid.request(request);
-      console.log(response);
-  } catch(e) {
-    console.log(e);
-  }
+//     const response = await clientSendGrid.request(request); 
+//     console.log(response);
+//   } catch(e) {
+//     console.log(e);
+//   }
  
-}
+// }
 
 const getVerifiedSenders = (req, res, next) => {
   const request = {
@@ -147,6 +172,5 @@ module.exports = {
     createSingleSend,
     getAllSingleSends,
     updateSingleSend,
-    scheduleSingleSend,
     getVerifiedSenders
 }

@@ -6,12 +6,14 @@ const SingleSendRouter = require('./routes/SingleSendRouter');
 const ContactRouter = require('./routes/ContactRouter');
 const SmsRouter = require('./routes/SmsRouter');
 const ListRouter = require('./routes/ListRouter');
+const MailSendRouter = require('./routes/MailSendRouter');
 
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use('/sendgrid/api/singleSend', SingleSendRouter);
 app.use('/sendgrid/api/contacts', ContactRouter);
 app.use('/sendgrid/api/lists/', ListRouter);
+app.use('/sendgrid/api/mailSend', MailSendRouter)
 app.use('twilio/api/sms', SmsRouter);
 
 
@@ -30,6 +32,5 @@ app.listen(5000, () => {
 
 /*
 Goal for today: 
-  - take email from frontend and add it to contacts
-  - allow scheduling tasks 
+  - errors to watch out for (email handling) make sure correct email. 
 */

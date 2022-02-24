@@ -3,7 +3,7 @@ import { transform } from 'typescript';
 import { useState } from 'react';
 import Tag from './Tag';
 import './TodoItem.css';
-import transformDate from './dateUtility';
+import transformDate from '../utility/utilityFunctions';
 
 // export const isChecked = () => {
 //     return checked;

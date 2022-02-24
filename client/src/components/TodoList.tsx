@@ -1,10 +1,8 @@
-import React, { EventHandler, useEffect } from 'react'
+import React, {useEffect} from 'react'
 import './TodoList.css'
-import { useState, useContext } from 'react'
+import {useState} from 'react'
 import Tag from './Tag'
 import TodoItem from './TodoItem'
-import {emailContext} from './Context'
-import transformDate from './dateUtility'
 import axios from 'axios';
 /**
  * Thank you for applying to Bits of Good. You are free to add/delete/modify any 
@@ -29,6 +27,7 @@ export default function TodoList() {
   const [tagValue, setTagValue] = useState('');
   const [index, setIndex] = useState(0);
   const [date, setDate] = useState(((new Date()).toLocaleDateString('en-CA') + 'T' + (new Date).toLocaleTimeString('it-IT')).substring(0,16));
+  const [dateZulu, setDateZulu] = useState(new Date().toISOString());
   const [todoListCompletedItems, setTodoListCompletedItems] = useState(() => {
     const todoListData = localStorage.getItem('todoListItems');
     return todoListData ? JSON.parse(todoListData) : [];
@@ -49,7 +48,6 @@ export default function TodoList() {
       }
       setIndex(index + 1);
       setTagValue('');
-
     }
     
     const removeElement = (index: number) => {
@@ -65,18 +63,15 @@ export default function TodoList() {
 
       try {
 
-        const transformedDate = transformDate(date); 
         const currentTagArray = tagArray;
         const currentTitle = title;
-        const emailStringObject = localStorage.getItem("email");
-        const listId = emailStringObject !== null ? JSON.parse(emailStringObject).emailListId : null;
-
+        const email = localStorage.getItem("email");
         const body = {
-          transformedDate,
+          dateZulu,
           currentTitle,
           currentTagArray,
-          listId
-      }
+          email
+        }
 
         const itemToAdd: any = { //ITEM FORMAT
           title: title,
@@ -92,13 +87,16 @@ export default function TodoList() {
         setTagArray([]);
         setDate(((new Date()).toLocaleDateString('en-CA') + 'T' + (new Date).toLocaleTimeString('it-IT')).substring(0,16));
         setChecked(false);
+        setDateZulu(new Date().toISOString());
         
        
 
-        await axios.post('/sendgrid/api/singleSend/createSingleSend', body);
+        const result = (await axios.post('/sendgrid/api/mailSend/sendMail', body)).data;
+        console.log("success");
 
       } catch(error) {
-        console.log(error);
+          console.log(typeof error);
+          alert(error);
       }
     }
 
@@ -235,6 +233,7 @@ export default function TodoList() {
                 value={date}
                 onChange={(e) => {
                   setDate(e.target.value);
+                  setDateZulu(new Date(e.target.value).toISOString());
                 }} />
             </div>
             <div className="hbox">
