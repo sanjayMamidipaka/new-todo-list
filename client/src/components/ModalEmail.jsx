@@ -18,6 +18,7 @@ function ModalEmail() {
         } else {
           localStorage.setItem("email", email);
           setShow(false);
+          alert("email updated!") // do we need this or nah? @nabeel @sanjay
         }
         
       } catch(e) {

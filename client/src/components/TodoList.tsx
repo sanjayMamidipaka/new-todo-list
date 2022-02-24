@@ -63,6 +63,10 @@ export default function TodoList() {
 
       try {
 
+        if (title === "") {
+          throw new Error("Title cannot be empty!");
+        } 
+
         const currentTagArray = tagArray;
         const currentTitle = title;
         const email = localStorage.getItem("email");
@@ -91,11 +95,11 @@ export default function TodoList() {
         
        
 
-        const result = (await axios.post('/sendgrid/api/mailSend/sendMail', body)).data;
-        console.log("success");
+        await axios.post('/sendgrid/api/mailSend/sendMail', body); // need error handling here!
+        alert("email scheduled!") // maybe make this alert look nicer? @nabeel @sanjay
 
       } catch(error) {
-          console.log(typeof error);
+          console.log(error);
           alert(error);
       }
     }

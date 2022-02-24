@@ -1,20 +1,12 @@
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
-
-const SingleSendRouter = require('./routes/SingleSendRouter');
-const ContactRouter = require('./routes/ContactRouter');
-const SmsRouter = require('./routes/SmsRouter');
-const ListRouter = require('./routes/ListRouter');
 const MailSendRouter = require('./routes/MailSendRouter');
+
 
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use('/sendgrid/api/singleSend', SingleSendRouter);
-app.use('/sendgrid/api/contacts', ContactRouter);
-app.use('/sendgrid/api/lists/', ListRouter);
 app.use('/sendgrid/api/mailSend', MailSendRouter)
-app.use('twilio/api/sms', SmsRouter);
 
 
 app.get('/', (req, res) => {

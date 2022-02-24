@@ -1,3 +1,4 @@
+require('dotenv').config();
 const clientSendGrid = require('@sendgrid/mail');
 const withinHour = require('../utility/utilityFunctions');
 clientSendGrid.setApiKey(process.env.SENDGRID_API_KEY);
