@@ -2,7 +2,7 @@ import React, { EventHandler, useEffect } from 'react'
 import { useState, useContext } from 'react'
 import TodoItem from './TodoItem'
 import {Modal, Button, Form} from 'react-bootstrap'
-// import 'bootstrap/dist/css/bootstrap.min.css'; this line of code isn't working
+import 'bootstrap/dist/css/bootstrap.min.css'
 import {emailContext} from './Context'
 import "./Modal.css"
 
