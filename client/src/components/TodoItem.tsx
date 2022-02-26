@@ -14,8 +14,9 @@ export default function TodoItem({todoListItem, index, parentCallBack, removeHan
 
     const transformDate = (dueDate: string) => {
         const date: string = dueDate;
-        const splitted = date.split('-')
-        const newDate = splitted[1] + "/" + splitted[2] + "/" + splitted[0];
+        const beforeSplit = date.split('T');
+        const splitted = beforeSplit[0].split('-')
+        const newDate = splitted[1] + "/" + splitted[2] + "/" + splitted[0] + " " + beforeSplit[1];
         return newDate
     }
 
@@ -28,7 +29,6 @@ export default function TodoItem({todoListItem, index, parentCallBack, removeHan
                     title,
                     tagList
                 }
-                console.log(body);
                 const result = (await axios.post('/sendEmail', body)).data;
                 console.log(result);
             } catch(e) {
