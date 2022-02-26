@@ -4,6 +4,7 @@ import TodoItem from './TodoItem'
 import {Modal, Button, Form} from 'react-bootstrap'
 // import 'bootstrap/dist/css/bootstrap.min.css'; this line of code isn't working
 import {emailContext} from './Context'
+import "./Modal.css"
 
 function ModalEmail() {
     const [show, setShow] = useState(false);
@@ -19,8 +20,8 @@ function ModalEmail() {
     const handleShow = () => setShow(true);
 
     return (     
-        <div>
-        <Button variant='primary' onClick={handleShow}>Set Your Email!</Button>            
+        <div className="ModalEmail">
+        <Button className="modal-btn" variant='primary' onClick={handleShow}>Set Your Email!</Button>            
         <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Choose an email to receive reminders</Modal.Title>

@@ -4,7 +4,7 @@ input[type=checkbox] {
     margin-right: 1.5rem; 
 }
 
-input[type=checkbox]:checked + .todo-header {
+input[type=checkbox]:checked + .hbox > .todo-header {
     text-decoration: line-through;
     color: rgb(145, 145, 145);
 }
@@ -13,11 +13,37 @@ h1 {
     margin: 0;
 }
 
+.todo-header{
+    transition: 0.17s all linear;
+}
+
 .todo-title {
     align-items: baseline;
+
 }
 
 .date-header {
     font-weight: 500;
     color: rgb(100, 180, 255);
+}
+
+.subbox {
+    justify-content: space-between;
+    flex: 1;
+    align-items: center;
+}
+
+div.remove-btn > i {
+    /* border: 1px solid black; */
+    margin: 0;
+    padding: 0;
+    opacity: 0.25;
+    transform: rotate(-90deg);
+    transition: 0.17s all ease-in-out;
+}
+
+div.remove-btn > i:hover {
+    opacity: 1;
+    transform: rotate(0deg);
+    /* text-shadow: 0 0rem 0.3rem rgb(177, 177, 177); */
 }

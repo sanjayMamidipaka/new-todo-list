@@ -245,11 +245,11 @@ export default function TodoList() {
         <button onClick={sortByTodo}>todo</button>
       </div>
 
-      <div>
+      <div className="item-wrapper">
           {todoListCompletedItems.map((todoListItem) => {
             return <TodoItem todoListItem={todoListItem} key={todoListItem.idx} index={todoListItem.idx} parentCallBack={handleCallBack} removeHandler={removeTodoItem}></TodoItem>
           })}
-        </div>
+      </div>
 
         </div>
   )

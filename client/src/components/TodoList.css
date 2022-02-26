@@ -108,8 +108,13 @@ button:active {
     border-bottom:rgb(100, 180, 255) 3px solid;
 }
 
-.sort-wrapper > button {
+.sort-wrapper > button, .modal-btn {
     font-size: 1.3rem;
     padding: 0.2rem 1rem;
     margin: 0 0.5rem;
+}
+
+.item-wrapper {
+    width: 66%;
+    margin: auto;
 }

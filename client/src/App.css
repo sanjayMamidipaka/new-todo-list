@@ -1,8 +1,9 @@
 .App {
     /* border: 1px solid black; */
-    width: 66%;
+    width: 80%;
     margin: auto;
     font-size: 2rem;
+    padding-top: 3rem;
 }
 
 .hbox {
@@ -10,3 +11,4 @@
     flex-flow: row nowrap;
     align-items: center;
 }
+
