@@ -38,6 +38,14 @@ export default function TodoList() {
 
   const [tagArray, setTagArray] = useState<{name1: string, index1: number}[]>([]);
 
+  const stringifyTags = (tagArray: {name1: string, index1: number}[]) => {
+    let tagArrayStringified:string = "Tags: ";
+    tagArray.map(val => tagArrayStringified += val.name1 + ", ");
+    tagArrayStringified = tagArrayStringified.substring(0,tagArrayStringified.length-2)
+    return tagArrayStringified;
+  }
+
+
 
     const addNewTag = (e: React.MouseEvent<HTMLButtonElement>) => {
       e.preventDefault();
@@ -68,13 +76,19 @@ export default function TodoList() {
         } 
 
         const currentTagArray = tagArray;
+        /**
+         * these lines stringify the tags so that it can be displayed in the email
+         */
+        const stringifiedTags = stringifyTags(tagArray);
+        console.log(stringifiedTags);
         const currentTitle = title;
         const email = localStorage.getItem("email");
         const body = {
           dateZulu,
           currentTitle,
           currentTagArray,
-          email
+          email,
+          stringifiedTags
         }
 
         const itemToAdd: any = { //ITEM FORMAT
