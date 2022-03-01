@@ -6,16 +6,16 @@ clientSendGrid.setApiKey(process.env.SENDGRID_API_KEY);
 
 async function sendMail(req, res, next) {
    try {
-
+        
         let dateZulu = Math.round((new Date(req.body.dateZulu).getTime() - 3600000) / 1000);
         let time = "In";
 
         if (withinHour(req.body.dateZulu)) {
             dateZulu = Math.round(Date.now() / 1000);
             time = "Within";
-            console.log("SEND NOW");
+            // console.log("SEND NOW"); 
         } else {
-            console.log("SEND LATER");
+            // console.log("SEND LATER"); 
         }
 
         const message = {
@@ -55,27 +55,26 @@ async function sendMail(req, res, next) {
             }
         }
 
-        const result = await clientSendGrid.send(message);
-        console.log(result);
-        res.send(result);
+        await clientSendGrid.send(message);
+    
    } catch(e) {
-        let schedulingError = false;
+        let schedulingError = true;
 
-        e.response.body.errors.filter(error => {
-            if (error.message.includes("Scheduling more than")) {
-                schedulingError = true;
-                console.log("scheduling error")
-                res.send("Cannot schedule event past 72hrs!");
-            } else {
-                console.log("Bruv");
-            }
-        });
-       
-        
-        if (!schedulingError) {
+        if (e.response === null) {
+            schedulingError = false;
+        }
+
+        if (schedulingError) {
+            e.response.body.errors.filter(error => {
+                if (error.message.includes("Scheduling more than")) {
+                    schedulingError = true;
+                    console.log("scheduling error")
+                    res.send("Cannot schedule event past 72hrs!");
+                }
+            });
+        } else {
             res.send(e);
         }
-        
    }
 }
 

@@ -71,6 +71,10 @@ export default function TodoList() {
 
       try {
 
+        if (localStorage.getItem("email") === null) {
+          await Promise.reject("Enter a valid email first!");
+        }
+
         if (title === "") {
           throw new Error("Title cannot be empty!");
         } 
@@ -104,7 +108,7 @@ export default function TodoList() {
 
         const result = (await axios.post('/sendgrid/api/mailSend/sendMail', body)).data // need error handling here!
         if (result.includes("Cannot schedule")) {
-          alert(result);
+          await Promise.reject(result);
         } else {
           setTitle('');
           setTodoListCompletedItems([...todoListCompletedItems, itemToAdd]);
@@ -117,7 +121,6 @@ export default function TodoList() {
          
 
       } catch(error) {
-          console.log(error);
           alert(error);
       }
     }

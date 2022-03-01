@@ -10,10 +10,8 @@ import {validateEmail} from '../utility/utilityFunctions';
 function ModalEmail() {
     const [show, setShow] = useState(false);
     const [email, setEmail] = useContext(emailContext);
-
     const handleEmail = async () => {
       try {
-        console.log(email);
         if (validateEmail(email) === null) {
           alert("Enter a correct email!");
         } else {
@@ -29,7 +27,6 @@ function ModalEmail() {
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
-    console.log(localStorage.getItem("email"));
 
     return (     
         <div className="ModalEmail">           
