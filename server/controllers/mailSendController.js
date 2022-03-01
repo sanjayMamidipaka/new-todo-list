@@ -1,5 +1,6 @@
 require('dotenv').config();
 const clientSendGrid = require('@sendgrid/mail');
+const { validateRequestWithBody } = require('twilio/lib/webhooks/webhooks');
 const withinHour = require('../utility/utilityFunctions');
 clientSendGrid.setApiKey(process.env.SENDGRID_API_KEY);
 
@@ -29,7 +30,8 @@ async function sendMail(req, res, next) {
                 
                  dynamic_template_data: {
                      "task": req.body.currentTitle,
-                     "time": time
+                     "time": time,
+                     "tags": req.body.stringifiedTags
                  },
 
                  send_at: dateZulu // unix timestamp "NOW" in seconds 
@@ -37,11 +39,11 @@ async function sendMail(req, res, next) {
             ],
 
             from: {
-                email: "tawsifkamal123@gmail.com"
+                email: "todolist.reminders@gmail.com"
             },
 
             reply_to: {
-                email: "tawsifkamal123@gmail.com"
+                email: "todolist.reminders@gmail.com"
             },
 
             subject: "Reminder! " + req.body.title + " due in 1hr!",
