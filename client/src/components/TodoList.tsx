@@ -99,18 +99,22 @@ export default function TodoList() {
           idx: new Date().getTime().toString(),
           checked: checked,
         }
-    
-        setTitle('');
-        setTodoListCompletedItems([...todoListCompletedItems, itemToAdd]);
-        setTagArray([]);
-        setDate(((new Date()).toLocaleDateString('en-CA') + 'T' + (new Date).toLocaleTimeString('it-IT')).substring(0,16));
-        setChecked(false);
-        setDateZulu(new Date().toISOString());
         
        
 
-        await axios.post('/sendgrid/api/mailSend/sendMail', body); // need error handling here!
-        alert("email scheduled!") // maybe make this alert look nicer? @nabeel @sanjay
+        const result = (await axios.post('/sendgrid/api/mailSend/sendMail', body)).data // need error handling here!
+        if (result.includes("Cannot schedule")) {
+          alert(result);
+        } else {
+          setTitle('');
+          setTodoListCompletedItems([...todoListCompletedItems, itemToAdd]);
+          setTagArray([]);
+          setDate(((new Date()).toLocaleDateString('en-CA') + 'T' + (new Date).toLocaleTimeString('it-IT')).substring(0,16));
+          setChecked(false);
+          setDateZulu(new Date().toISOString());
+          alert("email scheduled!");
+        }
+         
 
       } catch(error) {
           console.log(error);
