@@ -2,26 +2,38 @@ import React, { EventHandler, useEffect } from 'react'
 import { useState, useContext } from 'react'
 import TodoItem from './TodoItem'
 import {Modal, Button, Form} from 'react-bootstrap'
-// import 'bootstrap/dist/css/bootstrap.min.css'; this line of code isn't working
+import 'bootstrap/dist/css/bootstrap.min.css'; 
 import {emailContext} from './Context'
 import "./Modal.css"
+import {validateEmail} from '../utility/utilityFunctions';
 
 function ModalEmail() {
     const [show, setShow] = useState(false);
-
     const [email, setEmail] = useContext(emailContext);
 
-    const handleEmail = () => {
-        setShow(false);
+    const handleEmail = async () => {
+      try {
         console.log(email);
+        if (validateEmail(email) === null) {
+          alert("Enter a correct email!");
+        } else {
+          localStorage.setItem("email", email);
+          setShow(false);
+          alert("email updated!") // do we need this or nah? @nabeel @sanjay
+        }
+        
+      } catch(e) {
+        console.log(e);
+      }
     };
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+    console.log(localStorage.getItem("email"));
 
     return (     
-        <div className="ModalEmail">
-        <Button className="modal-btn" variant='primary' onClick={handleShow}>Set Your Email!</Button>            
+        <div className="ModalEmail">           
+        <Button className="modal-btn" variant='primary' onClick={handleShow}>{localStorage.getItem("email") === null ? "Set Your Email" : "Update Your Email"}</Button>            
         <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Choose an email to receive reminders</Modal.Title>

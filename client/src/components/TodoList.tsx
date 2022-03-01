@@ -1,9 +1,9 @@
-import React, { EventHandler, useEffect } from 'react'
+import React, {useEffect} from 'react'
 import './TodoList.css'
-import { useState, useContext } from 'react'
+import {useState} from 'react'
 import Tag from './Tag'
 import TodoItem from './TodoItem'
-import {emailContext} from './Context'
+import axios from 'axios';
 /**
  * Thank you for applying to Bits of Good. You are free to add/delete/modify any 
  * parts of this project. That includes changing the types.ts, creating css files, 
@@ -27,6 +27,7 @@ export default function TodoList() {
   const [tagValue, setTagValue] = useState('');
   const [index, setIndex] = useState(0);
   const [date, setDate] = useState(((new Date()).toLocaleDateString('en-CA') + 'T' + (new Date).toLocaleTimeString('it-IT')).substring(0,16));
+  const [dateZulu, setDateZulu] = useState(new Date().toISOString());
   const [todoListCompletedItems, setTodoListCompletedItems] = useState(() => {
     const todoListData = localStorage.getItem('todoListItems');
     return todoListData ? JSON.parse(todoListData) : [];
@@ -37,7 +38,14 @@ export default function TodoList() {
 
   const [tagArray, setTagArray] = useState<{name1: string, index1: number}[]>([]);
 
-  const [email, setEmail] = useContext(emailContext);
+  const stringifyTags = (tagArray: {name1: string, index1: number}[]) => {
+    let tagArrayStringified:string = "Tags: ";
+    tagArray.map(val => tagArrayStringified += val.name1 + ", ");
+    tagArrayStringified = tagArrayStringified.substring(0,tagArrayStringified.length-2)
+    return tagArrayStringified;
+  }
+
+
 
     const addNewTag = (e: React.MouseEvent<HTMLButtonElement>) => {
       e.preventDefault();
@@ -48,7 +56,6 @@ export default function TodoList() {
       }
       setIndex(index + 1);
       setTagValue('');
-
     }
     
     const removeElement = (index: number) => {
@@ -60,21 +67,59 @@ export default function TodoList() {
       
     }
 
-    const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
-      const itemToAdd: any = { //ITEM FORMAT
-      title: title,
-      dueDate: date,
-      tagList: tagArray,
-      completed: false,
-      idx: new Date().getTime().toString(),
-      checked: checked,
-    }
-    setTitle('');
-    setTodoListCompletedItems([...todoListCompletedItems, itemToAdd]);
-    setTagArray([]);
-    setDate(((new Date()).toLocaleDateString('en-CA') + 'T' + (new Date).toLocaleTimeString('it-IT')).substring(0,16));
-    setChecked(false);
-    console.log(email);
+    const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
+
+      try {
+
+        if (title === "") {
+          throw new Error("Title cannot be empty!");
+        } 
+
+        const currentTagArray = tagArray;
+        /**
+         * these lines stringify the tags so that it can be displayed in the email
+         */
+        const stringifiedTags = stringifyTags(tagArray);
+        console.log(stringifiedTags);
+        const currentTitle = title;
+        const email = localStorage.getItem("email");
+        const body = {
+          dateZulu,
+          currentTitle,
+          currentTagArray,
+          email,
+          stringifiedTags
+        }
+
+        const itemToAdd: any = { //ITEM FORMAT
+          title: title,
+          dueDate: date,
+          tagList: tagArray,
+          completed: false,
+          idx: new Date().getTime().toString(),
+          checked: checked,
+        }
+        
+       
+
+        const result = (await axios.post('/sendgrid/api/mailSend/sendMail', body)).data // need error handling here!
+        if (result.includes("Cannot schedule")) {
+          alert(result);
+        } else {
+          setTitle('');
+          setTodoListCompletedItems([...todoListCompletedItems, itemToAdd]);
+          setTagArray([]);
+          setDate(((new Date()).toLocaleDateString('en-CA') + 'T' + (new Date).toLocaleTimeString('it-IT')).substring(0,16));
+          setChecked(false);
+          setDateZulu(new Date().toISOString());
+          alert("email scheduled!");
+        }
+         
+
+      } catch(error) {
+          console.log(error);
+          alert(error);
+      }
     }
 
     useEffect(() => {
@@ -210,6 +255,7 @@ export default function TodoList() {
                 value={date}
                 onChange={(e) => {
                   setDate(e.target.value);
+                  setDateZulu(new Date(e.target.value).toISOString());
                 }} />
             </div>
             <div className="hbox">

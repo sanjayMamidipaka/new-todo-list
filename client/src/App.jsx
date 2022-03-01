@@ -6,7 +6,9 @@ import { emailContext } from './components/Context';
 import {useState} from 'react';
 
 function App() {
-  const emailState = useState('');
+  // getting email from localStorage
+  const email = localStorage.getItem("email");
+  const emailState = useState(email);
 
   return (
     <div className="App">
