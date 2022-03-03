@@ -7,7 +7,7 @@
 
 .card {
     margin: 2rem;
-    border-radius: 0.5rem;
+    border-radius: 0.35rem !important;
     padding: 2rem;
     box-shadow: 0 0.25rem 0.7rem rgb(177, 177, 177);
     transition: 0.125s all ease-in-out;
@@ -21,9 +21,9 @@
 }
 
 input[type=text], .date-input {
-    border: none;
-    border-bottom: solid 1px gray;
-    margin: 0 0.5rem;
+    border: none !important;
+    border-bottom: solid 1px gray !important;
+    margin: 0 0.5rem !important;
     padding-bottom: 0.3rem;
     transition: 0.125s all ease-in-out;
 }
@@ -36,8 +36,8 @@ input[type=text]::placeholder {
 
 input[type=text]:focus, .date-input:focus {
     outline: none;
-    margin-bottom: -2px;
-    border-bottom: 3px solid rgb(100, 180, 255);
+    margin-bottom: -2px !important;
+    border-bottom: 3px solid rgb(27, 73, 116) !important;
 }
 
 input[type=text]:focus::placeholder {
@@ -45,16 +45,16 @@ input[type=text]:focus::placeholder {
 }
 
 .first-line {
-    justify-content: space-between;
-    align-items: flex-end;
-    margin-bottom: 2rem;
+    padding: 2rem;
 }
 
 .title-input {
     font-weight: bold;
-    font-size: 2.2rem;
-    height: 2.5rem;
-    padding-left: 0.5rem;
+    font-size: 4rem;
+    width: 100%;
+    height: 5.5rem;
+    padding-left: 1.5rem;
+    padding-bottom: 0.5rem !important;
 }
 
 .tag-input {
@@ -62,14 +62,21 @@ input[type=text]:focus::placeholder {
     height: 2.4rem;
 }
 
+.second-line {
+    width: 95%;
+    margin: auto;
+    justify-content: space-between;
+    padding: 2rem 0;
+}
+
 button {
-    background-color: rgb(100, 180, 255);
+    background-color: rgb(27, 73, 116);
     border: none;
-    border-radius: 0.75rem;
+    border-radius: 0.35rem !important;
     color: white;
     position: relative;
     bottom: 0;
-    transition: 0.125s all ease-in-out;
+    transition: 0.125s all ease-in-out !important;
 }
 
 button:hover {
@@ -78,7 +85,7 @@ button:hover {
 }
 
 button:active {
-    color: rgb(100, 180, 255);
+    color: rgb(27, 73, 116);
     background-color: white;
 }
 
@@ -86,8 +93,8 @@ button:active {
     margin: 0 0.5rem;
     align-self: stretch;
     font-size: 2rem;
-    max-width: 4rem;
-    padding: 1rem;
+    width: 4rem;
+    height: 4rem;
 }
 
 .date-input {
@@ -95,17 +102,17 @@ button:active {
 }
 
 .add-btn {
-    margin: 0 0.5rem;
-    width: 100%;
-    align-self: stretch;
+    margin-left: 3rem;
+    align-self: flex-start;
     font-size: 3rem;
     min-width: 7rem;
+    min-height: 7rem;
 }
 
 .sort-wrapper {
     justify-content: flex-end;
     padding: 1rem;
-    border-bottom:rgb(100, 180, 255) 3px solid;
+    border-bottom:rgb(27, 73, 116) 3px solid;
 }
 
 .sort-wrapper > button, .modal-btn {

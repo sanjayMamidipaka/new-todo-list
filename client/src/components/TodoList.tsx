@@ -195,39 +195,13 @@ export default function TodoList() {
   return (
     <div>
       <div className="top-wrapper">
-        <div className="hbox">
-          <div className="left">
-            <div className="hbox first-line">
-              <input className="title-input"
-                placeholder="Title"
-                type="text"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-              />
-                <input
-                className="date-input"
-                type="datetime-local"
-                value={date}
-                onChange={(e) => {
-                  setDate(e.target.value);
-                }} />
-            </div>
-            <div className="hbox">
-              <input
-                type="text"
-                className="tag-input"
-                placeholder="Add tags"
-                value={tagValue}
-                onChange={(e) => setTagValue(e.target.value)}
-              />
-              <button type="submit" className="tag-btn" onClick={addNewTag}>
-              <i className="fa-solid fa-square-plus"></i>
-              </button>
-            </div>
-          </div>
-          <button type='submit' className="add-btn" onClick={handleSubmit}>
-            <i className="fa-solid fa-circle-plus"></i>
-          </button>
+        <div className="first-line">
+          <input className="title-input"
+            placeholder="Title"
+            type="text"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+          />
         </div>
         <div className="tag-wrapper removable">
           {/* <Tag name="Bruv" key={99} theIndex={99} remove={removeElement} include={""}></Tag>
@@ -237,6 +211,30 @@ export default function TodoList() {
             return <Tag name={tagObject.name1} key={tagObject.index1} theIndex={tagObject.index1} remove={removeElement} include={"x"}></Tag>
           })}
         </div>
+        <div className="hbox second-line">
+          <input
+          className="date-input"
+          type="datetime-local"
+          value={date}
+          onChange={(e) => {
+            setDate(e.target.value);
+          }} />
+          <div className="hbox">
+            <input
+              type="text"
+              className="tag-input"
+              placeholder="Add tags"
+              value={tagValue}
+              onChange={(e) => setTagValue(e.target.value)}
+            />
+            <button type="submit" className="tag-btn" onClick={addNewTag}>
+            <i className="fa-solid fa-square-plus"></i>
+            </button>
+          </div>
+        </div>
+        <button type='submit' className="add-btn" onClick={handleSubmit}>
+          <i className="fa-solid fa-circle-plus"></i>
+        </button>
 
       </div>
 
