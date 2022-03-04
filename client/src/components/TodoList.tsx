@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react'
+import React, {useContext, useEffect} from 'react'
 import './TodoList.css'
 import {useState} from 'react'
 import Tag from './Tag'
@@ -128,6 +128,12 @@ export default function TodoList() {
     useEffect(() => {
         localStorage.setItem("todoListItems", JSON.stringify(todoListCompletedItems));
     }, [todoListCompletedItems]);
+
+    // useEffect(() => {
+    //     if (localStorage.getItem('todoListItems') == '[]' && localStorage.getItem('email') == null) {
+          
+    //     }
+    // }, []);
 
     const sortByTodo = () => {
       setTodoToggle(!todoToggle);

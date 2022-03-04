@@ -4,7 +4,6 @@ import TodoItem from './TodoItem'
 import {Modal, Button, ListGroup} from 'react-bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css'; 
 import './InstructionsModal.css';
-import {emailContext} from './Context'
 import {validateEmail} from '../utility/utilityFunctions';
 
 function InstructionsModal() {
