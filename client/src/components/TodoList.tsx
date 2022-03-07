@@ -68,6 +68,7 @@ export default function TodoList() {
     }
 
     const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
+      console.log("hello there");
 
       try {
 
@@ -84,7 +85,6 @@ export default function TodoList() {
          * these lines stringify the tags so that it can be displayed in the email
          */
         const stringifiedTags = stringifyTags(tagArray);
-        console.log(stringifiedTags);
         const currentTitle = title;
         const email = localStorage.getItem("email");
         const body = {
@@ -107,11 +107,13 @@ export default function TodoList() {
        
 
         const result = (await axios.post('/sendgrid/api/mailSend/sendMail', body)).data // need error handling here!
+        console.log(result);
         if (result.includes("Cannot schedule")) {
           await Promise.reject(result);
         } else {
           setTitle('');
           setTodoListCompletedItems([...todoListCompletedItems, itemToAdd]);
+          console.log(todoListCompletedItems);
           setTagArray([]);
           setDate(((new Date()).toLocaleDateString('en-CA') + 'T' + (new Date).toLocaleTimeString('it-IT')).substring(0,16));
           setChecked(false);
@@ -294,7 +296,7 @@ export default function TodoList() {
         <button onClick={sortByTodo}>todo</button>
       </div>
 
-      <div className="item-wrapper">
+      <div /*className="item-wrapper"*/>
           {todoListCompletedItems.map((todoListItem) => {
             return <TodoItem todoListItem={todoListItem} key={todoListItem.idx} index={todoListItem.idx} parentCallBack={handleCallBack} removeHandler={removeTodoItem}></TodoItem>
           })}
